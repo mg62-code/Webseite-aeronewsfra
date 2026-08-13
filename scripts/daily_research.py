@@ -24,7 +24,7 @@ FEEDS = [
     ("Google News FRA", "https://news.google.com/rss/search?q=Frankfurt+Airport+OR+FRA+aviation&hl=de&gl=DE&ceid=DE:de"),
     ("Google News Europa Movements", "https://news.google.com/rss/search?q=aircraft+diversion+OR+emergency+landing+Europe+aviation&hl=en&gl=US&ceid=US:en"),
 ]
-FRA_TERMS = ("frankfurt", "frankfurt airport", "fra", "fraport", "rhein-main", "lufthansa")
+FRA_TERMS = ("frankfurt", "frankfurt airport", "fra", "fraport", "rhein-main")
 EUROPE_TERMS = ("europe", "europa", "germany", "deutschland", "france", "italy", "spain", "uk", "united kingdom", "switzerland", "austria", "netherlands", "belgium", "poland", "norway", "sweden", "denmark", "portugal", "greece", "ireland")
 MOVEMENT_TERMS = ("diversion", "diverted", "emergency landing", "notlandung", "zwischenlandung", "return to", "umkehr", "7700", "smoke", "rauch", "odour", "odor", "geruch", "incident", "zwischenfall", "special movement")
 FIELDS = ["id", "title", "date", "time", "category", "summary", "body", "source_name", "source_url", "relevance", "image", "alt_text", "status", "featured", "is_demo"]
@@ -59,6 +59,8 @@ def parse_feed(source_name: str, url: str) -> list[dict[str, str]]:
 def relevant(entry: dict[str, str]) -> tuple[bool, str]:
     haystack = f"{entry['title']} {entry['description']}".lower()
     fra = any(term in haystack for term in FRA_TERMS)
+    if "lufthansa" in haystack and any(term in haystack for term in ("frankfurt", "fra", "hub", "lufthansa group")):
+        fra = True
     movement = any(term in haystack for term in MOVEMENT_TERMS)
     europe = any(term in haystack for term in EUROPE_TERMS)
     if fra:
