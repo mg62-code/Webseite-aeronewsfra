@@ -32,7 +32,8 @@ document.querySelectorAll("#fra-map, #home-map").forEach(mapElement => {
   const axes = L.layerGroup();
   L.polyline([[50.055, 8.50], [50.018, 8.67]], { color: "#00a6c8", weight: 3, dashArray: "8 8", opacity: .8 }).bindPopup("Schematische Flughafenachse").addTo(axes);
   L.polyline([[49.98, 8.52], [50.09, 8.62]], { color: "#ffcb05", weight: 3, dashArray: "8 8", opacity: .8 }).bindPopup("Schematische Flughafenachse").addTo(axes);
-  L.control.layers({ "OpenStreetMap": osm, "Helle Karte": light }, { "Standortbereich": airportArea, "Flughafenpunkte": facilities, "Schematische Achsen": axes }, { collapsed: isHomeMap }).addTo(map);
+  const aircraftLayer = L.layerGroup();
+  L.control.layers({ "OpenStreetMap": osm, "Helle Karte": light }, { "Standortbereich": airportArea, "Flughafenpunkte": facilities, "Schematische Achsen": axes, "Live-Fluege": aircraftLayer }, { collapsed: isHomeMap }).addTo(map);
   const legend = document.createElement("div");
   legend.className = "map-legend";
   legend.innerHTML = "<span>Standortbereich</span><span>Flughafenpunkte</span><span>Orientierungsachsen</span>";
@@ -46,6 +47,7 @@ document.querySelectorAll("#fra-map, #home-map").forEach(mapElement => {
   const locate = document.querySelector("#map-locate");
   const measure = document.querySelector("#map-measure");
   const fullscreen = document.querySelector("#map-fullscreen");
+  const liveAircraft = document.querySelector("#map-live-aircraft");
   select?.addEventListener("change", () => {
     const selected = pointIndex[select.value];
     if (!selected) return;
@@ -78,5 +80,36 @@ document.querySelectorAll("#fra-map, #home-map").forEach(mapElement => {
     if (!document.fullscreenElement) mapElement.requestFullscreen?.();
     else document.exitFullscreen?.();
     window.setTimeout(() => map.invalidateSize(), 300);
+  });
+  const escapePopup = value => String(value || "").replace(/[&<>'"]/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", "\"": "&quot;" }[character]));
+  liveAircraft?.addEventListener("click", async () => {
+    if (map.hasLayer(aircraftLayer)) {
+      map.removeLayer(aircraftLayer);
+      liveAircraft.classList.remove("is-active");
+      setStatus("Live-Flugzeugschicht ausgeblendet.");
+      return;
+    }
+    liveAircraft.disabled = true;
+    setStatus("Live-Flugzustaende werden von OpenSky geladen...");
+    try {
+      const response = await fetch("https://opensky-network.org/api/states/all?lamin=49.8&lomin=8.2&lamax=50.3&lomax=8.9", { cache: "no-store" });
+      if (!response.ok) throw new Error("OpenSky antwortet nicht");
+      const payload = await response.json();
+      aircraftLayer.clearLayers();
+      (payload.states || []).filter(state => state[5] != null && state[6] != null).forEach(state => {
+        const callsign = escapePopup((state[1] || "unbekannt").trim());
+        const country = escapePopup(state[2] || "unbekannt");
+        const altitude = state[7] == null ? "unbekannt" : `${Math.round(state[7])} m`;
+        const speed = state[9] == null ? "unbekannt" : `${Math.round(state[9] * 3.6)} km/h`;
+        L.circleMarker([state[6], state[5]], { radius: 5, color: "#003b6f", fillColor: "#00a6c8", fillOpacity: .9, weight: 1 }).bindPopup(`<strong>${callsign}</strong><br>${country}<br>Hoehe: ${altitude}<br>Geschwindigkeit: ${speed}<br><small>Quelle: OpenSky zum Abrufzeitpunkt</small>`).addTo(aircraftLayer);
+      });
+      aircraftLayer.addTo(map);
+      liveAircraft.classList.add("is-active");
+      setStatus(`${aircraftLayer.getLayers().length} Flugzustaende geladen. Quelle: OpenSky zum Abrufzeitpunkt.`);
+    } catch (error) {
+      setStatus("Live-Daten konnten nicht geladen werden. Bitte spaeter erneut versuchen oder externe Live-Links nutzen.");
+    } finally {
+      liveAircraft.disabled = false;
+    }
   });
 });
