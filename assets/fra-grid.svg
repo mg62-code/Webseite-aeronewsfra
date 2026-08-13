@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">AeroNewsFRA Airport Grid</title>
+  <desc id="desc">Schematische Liniengrafik mit Runway- und Radar-Elementen.</desc>
+  <rect width="1200" height="520" fill="#003b6f"/>
+  <g fill="none" stroke="#8ed7cf" stroke-opacity=".28" stroke-width="2">
+    <path d="M0 90h1200M0 180h1200M0 270h1200M0 360h1200M0 450h1200"/>
+    <path d="M100 0v520M220 0v520M340 0v520M460 0v520M580 0v520M700 0v520M820 0v520M940 0v520M1060 0v520"/>
+  </g>
+  <g fill="none" stroke="#ffcb05" stroke-width="4" stroke-linecap="round">
+    <path d="M82 450L1070 58"/><path d="M190 502L1160 118"/>
+  </g>
+  <g fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"><circle cx="620" cy="270" r="108"/><circle cx="620" cy="270" r="205"/></g>
+  <g fill="#ffcb05"><circle cx="620" cy="270" r="7"/><circle cx="875" cy="155" r="5"/><circle cx="345" cy="372" r="5"/></g>
+  <text x="38" y="48" fill="#fff" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="5">FRA / AERONEWSFRA</text>
+</svg>

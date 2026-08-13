@@ -52,7 +52,7 @@ async function loadNews() {
       list.innerHTML = searched.length ? searched.map(card).join("") : `<p class="empty-state">Keine Meldung passt zu dieser Suche.</p>`;
     });
     if (movements) {
-      const movementItems = items.filter(item => ["Special Movement", "Diversion", "Notfall"].includes(item.category));
+      const movementItems = items.filter(item => ["Special Movement", "Special Movement Europa", "Diversion", "Notfall"].includes(item.category));
       movements.innerHTML = movementItems.length ? movementItems.map(card).join("") : `<p class="empty-state">Aktuell liegen keine veroeffentlichten Special-Movement-Meldungen vor.</p>`;
     }
   } catch (error) {

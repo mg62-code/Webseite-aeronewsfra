@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" role="img" aria-labelledby="title desc">
+  <title id="title">Terminal line illustration</title>
+  <desc id="desc">Schematische helle Flughafenarchitektur im AeroNewsFRA Branding.</desc>
+  <rect width="900" height="440" fill="#eef4f7"/>
+  <path d="M75 330V168l155-74 155 74v162M385 330V145l155-84 155 84v185M695 330V190l105-55v195" fill="none" stroke="#003b6f" stroke-width="7"/>
+  <path d="M45 330h810" stroke="#ffcb05" stroke-width="12"/>
+  <path d="M110 210h95M420 202h95M730 230h60" stroke="#00a6c8" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="710" cy="90" r="38" fill="#003b6f"/><path d="M690 90h40M710 70v40" stroke="#ffcb05" stroke-width="5"/>
+</svg>
