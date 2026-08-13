@@ -1,22 +1,5 @@
 [
   {
-    "id": "fraport-juli-traffic",
-    "title": "Frankfurt Airport erreicht im Juli rund 6,2 Millionen Passagiere",
-    "date": "2026-08-13",
-    "time": "",
-    "category": "Frankfurt Airport",
-    "summary": "Die Passagierzahl am Flughafen Frankfurt lag im Juli 2026 rund 1,4 Prozent über dem Vorjahresmonat.",
-    "body": "Nach den veröffentlichten Verkehrszahlen wurden im Juli rund 6,2 Millionen Passagiere gezählt. Gleichzeitig gingen die Flugbewegungen um 3,2 Prozent auf 41.286 Starts und Landungen zurück. Das Cargo-Aufkommen stieg um 0,9 Prozent auf 180.622 Tonnen.",
-    "source_name": "Fraport-Verkehrszahlen (berichtet von Payload Asia)",
-    "source_url": "https://payloadasia.com/2026/08/fraport-reports-july-growth-frankfurt-passenger-traffic-cargo-volumes/",
-    "relevance": "hoch",
-    "image": "",
-    "alt_text": "Flughafen Frankfurt: Verkehrszahlen Juli 2026",
-    "status": "published",
-    "featured": "yes",
-    "is_demo": "no"
-  },
-  {
     "id": "auto-dae28e3b4373",
     "title": "Deutlich weniger Flüge am Frankfurter Flughafen",
     "date": "2026-08-13",
