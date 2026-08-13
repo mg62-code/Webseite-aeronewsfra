@@ -9,7 +9,7 @@ SOURCE_CSV = ROOT / "content" / "news-template.csv"
 OUTPUT = ROOT / "data" / "news.json"
 FIELDS = [
     "id", "title", "date", "time", "category", "summary", "body",
-    "source_name", "source_url", "relevance", "image", "alt_text", "status",
+    "source_name", "source_url", "relevance", "image", "alt_text", "status", "featured", "is_demo",
 ]
 
 

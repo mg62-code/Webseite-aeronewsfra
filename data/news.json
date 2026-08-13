@@ -1,1 +1,53 @@
-[]
+[
+  {
+    "id": "demo-003",
+    "title": "Demo: Infrastruktur am Flughafen",
+    "date": "",
+    "time": "",
+    "category": "Terminal 3",
+    "summary": "Beispiel fuer ein dauerhaft relevantes Hintergrundthema rund um Frankfurt Airport.",
+    "body": "Evergreen-Inhalte koennen an nachrichtenarmen Tagen genutzt werden, wenn sie quellenbasiert erstellt und korrekt belegt sind.",
+    "source_name": "DEMO-INHALT",
+    "source_url": "",
+    "relevance": "niedrig",
+    "image": "",
+    "alt_text": "Demo-Inhalt",
+    "status": "published",
+    "featured": "no",
+    "is_demo": "yes"
+  },
+  {
+    "id": "demo-002",
+    "title": "Demo: Ein Special Movement sachlich einordnen",
+    "date": "",
+    "time": "",
+    "category": "Special Movement",
+    "summary": "Beispiel fuer eine klar gekennzeichnete Meldung ohne Spekulationen oder unbestaetigte Ursachen.",
+    "body": "Nur bestaetigte Angaben wuerden im echten Betrieb veroeffentlicht. Externe Trackingdaten waeren dabei niemals die einzige Quelle.",
+    "source_name": "DEMO-INHALT",
+    "source_url": "",
+    "relevance": "mittel",
+    "image": "",
+    "alt_text": "Demo-Inhalt",
+    "status": "published",
+    "featured": "yes",
+    "is_demo": "yes"
+  },
+  {
+    "id": "demo-001",
+    "title": "Demo: Wie sich Frankfurt im Blick behalten laesst",
+    "date": "",
+    "time": "",
+    "category": "Frankfurt Airport",
+    "summary": "Beispielmeldung zur Darstellung des Newsrooms. Vor dem Livegang durch eine recherchierte Meldung ersetzen.",
+    "body": "Dies ist kein aktueller Nachrichtenbericht. Die Zeile zeigt, wie Fakten, Einordnung und Quelle spaeter auf der Website erscheinen.",
+    "source_name": "DEMO-INHALT",
+    "source_url": "",
+    "relevance": "mittel",
+    "image": "",
+    "alt_text": "Demo-Inhalt",
+    "status": "published",
+    "featured": "yes",
+    "is_demo": "yes"
+  }
+]
