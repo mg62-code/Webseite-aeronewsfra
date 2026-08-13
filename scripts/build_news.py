@@ -44,6 +44,13 @@ def read_csv() -> list[dict[str, str]]:
 def main() -> None:
     rows = read_xlsx() if SOURCE_XLSX.exists() else read_csv()
     published = [row for row in rows if row["status"].lower() == "published"]
+    for row in published:
+        if not row["id"] or not row["title"] or not row["summary"] or not row["category"]:
+            raise ValueError(f"Unvollstaendiger veroeffentlichter Eintrag: {row.get('id', '')}")
+        if not row["source_name"]:
+            raise ValueError(f"Quelle fehlt bei: {row['id']}")
+        if row["source_url"] and not row["source_url"].lower().startswith("https://"):
+            raise ValueError(f"Quellenlink muss HTTPS verwenden: {row['id']}")
     published.sort(key=lambda row: (row["date"], row["time"], row["id"]), reverse=True)
     OUTPUT.write_text(json.dumps(published, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Generated {OUTPUT} with {len(published)} published item(s).")

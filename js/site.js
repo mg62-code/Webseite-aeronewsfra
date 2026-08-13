@@ -10,10 +10,22 @@ function formatDate(value) {
   return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat("de-DE", { day: "2-digit", month: "short", year: "numeric" }).format(date);
 }
 
+function safeSourceUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
 function card(item) {
   const demo = item.is_demo === "yes" ? `<span class="demo-badge">DEMO-INHALT</span>` : "";
-  const source = item.source_url ? `<a class="source" href="${escapeHtml(item.source_url)}" target="_blank" rel="noreferrer">Quelle: ${escapeHtml(item.source_name || "Quelle")} ↗</a>` : `<span class="source">Quelle: ${escapeHtml(item.source_name || "nicht angegeben")}</span>`;
-  return `<article class="news-card"><div><div class="news-meta"><span>${escapeHtml(item.category)}</span><span>${escapeHtml(formatDate(item.date))}</span></div>${demo}<h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.summary)}</p></div>${source}</article>`;
+  const sourceUrl = safeSourceUrl(item.source_url);
+  const source = sourceUrl ? `<a class="source" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">Quelle: ${escapeHtml(item.source_name || "Quelle")} ↗</a>` : `<span class="source">Quelle: ${escapeHtml(item.source_name || "nicht angegeben")}</span>`;
+  const relevance = item.relevance ? `<span class="relevance">Relevanz: ${escapeHtml(item.relevance)}</span>` : "";
+  const body = item.body ? `<details class="card-details"><summary>Mehr zur Einordnung</summary><p>${escapeHtml(item.body)}</p></details>` : "";
+  return `<article class="news-card"><div><div class="news-meta"><span>${escapeHtml(item.category)}</span><span>${escapeHtml(formatDate(item.date))}</span></div>${demo}${relevance}<h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.summary)}</p>${body}</div>${source}</article>`;
 }
 
 async function loadNews() {
