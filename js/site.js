@@ -37,6 +37,7 @@ async function loadNews() {
     const list = document.querySelector("#news-list");
     const movements = document.querySelector("#movement-list");
     const filters = document.querySelector("#category-filters");
+    const search = document.querySelector("#news-search");
     const requestedCategory = new URLSearchParams(window.location.search).get("category");
     const filtered = requestedCategory ? items.filter(item => item.category === requestedCategory) : items;
     if (filters) {
@@ -45,6 +46,11 @@ async function loadNews() {
     }
     if (featured) featured.innerHTML = items.length ? items.slice(0, 3).map(card).join("") : `<p class="empty-state">Aktuell werden gepruefte Meldungen vorbereitet.</p>`;
     if (list) list.innerHTML = filtered.length ? filtered.map(card).join("") : `<p class="empty-state">Keine veroeffentlichten Meldungen in diesem Bereich.</p>`;
+    if (search && list) search.addEventListener("input", () => {
+      const term = search.value.trim().toLowerCase();
+      const searched = filtered.filter(item => `${item.title} ${item.summary} ${item.category} ${item.source_name}`.toLowerCase().includes(term));
+      list.innerHTML = searched.length ? searched.map(card).join("") : `<p class="empty-state">Keine Meldung passt zu dieser Suche.</p>`;
+    });
     if (movements) {
       const movementItems = items.filter(item => ["Special Movement", "Diversion", "Notfall"].includes(item.category));
       movements.innerHTML = movementItems.length ? movementItems.map(card).join("") : `<p class="empty-state">Aktuell liegen keine veroeffentlichten Special-Movement-Meldungen vor.</p>`;
@@ -54,4 +60,25 @@ async function loadNews() {
   }
 }
 
+async function loadDashboard() {
+  const stats = document.querySelector("#dashboard-stats");
+  const categories = document.querySelector("#dashboard-categories");
+  if (!stats && !categories) return;
+  try {
+    const response = await fetch(dataUrl, { cache: "no-store" });
+    if (!response.ok) throw new Error("dashboard data unavailable");
+    const items = await response.json();
+    const movementCount = items.filter(item => ["Special Movement", "Special Movement Europa", "Diversion", "Notfall"].includes(item.category)).length;
+    const latest = items[0]?.date ? formatDate(items[0].date) : "Keine Daten";
+    if (stats) stats.innerHTML = `<div class="stat-card"><span>Meldungen online</span><strong>${items.length}</strong><small>freigegebene Beiträge</small></div><div class="stat-card"><span>Special Movements</span><strong>${movementCount}</strong><small>im öffentlichen Newsroom</small></div><div class="stat-card"><span>Letztes Update</span><strong>${escapeHtml(latest)}</strong><small>nach Quellenlage</small></div>`;
+    if (categories) {
+      const counts = items.reduce((result, item) => { result[item.category] = (result[item.category] || 0) + 1; return result; }, {});
+      categories.innerHTML = Object.entries(counts).map(([category, count]) => `<a href="news.html?category=${encodeURIComponent(category)}"><span>${escapeHtml(category)}</span><b>${count}</b></a>`).join("") || `<p class="empty-state">Noch keine freigegebenen Themen.</p>`;
+    }
+  } catch {
+    if (stats) stats.innerHTML = `<p class="empty-state">Dashboard-Daten konnten nicht geladen werden.</p>`;
+  }
+}
+
 loadNews();
+loadDashboard();
