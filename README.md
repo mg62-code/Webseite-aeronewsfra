@@ -12,6 +12,12 @@ The deploy workflow converts the spreadsheet into `data/news.json` and the
 site displays only rows whose `status` is `published`. Drafts remain hidden.
 If no Excel file exists, the workflow uses the CSV template as a fallback.
 
+The scheduled `Daily AeroNewsFRA research` workflow checks source feeds every
+day for Frankfurt, Rhine-Main and European special-movement candidates. It
+adds new results to the workbook with `status=review`. A human must verify the
+source and change the row to `published`; the automation never publishes an
+unverified incident by itself.
+
 ### Status values
 
 - `draft`: not visible
