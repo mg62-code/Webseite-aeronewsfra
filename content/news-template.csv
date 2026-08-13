@@ -1,0 +1,2 @@
+id,title,date,time,category,summary,body,source_name,source_url,relevance,image,alt_text,status
+beispiel-001,Beispielzeile entfernen,2026-01-01,,Frankfurt Airport,Beispieltext durch eine gepruefte Meldung ersetzen.,,Quelle eintragen,https://example.com,mittel,,Beispielbild,draft

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mg62-code.github.io/Webseite-aeronewsfra/sitemap.xml
