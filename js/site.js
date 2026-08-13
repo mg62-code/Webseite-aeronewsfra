@@ -61,7 +61,7 @@ async function loadNews() {
 }
 
 async function loadDashboard() {
-  const stats = document.querySelector("#dashboard-stats");
+  const stats = document.querySelector("#dashboard-stats, #home-stats");
   const categories = document.querySelector("#dashboard-categories");
   if (!stats && !categories) return;
   try {
@@ -70,7 +70,8 @@ async function loadDashboard() {
     const items = await response.json();
     const movementCount = items.filter(item => ["Special Movement", "Special Movement Europa", "Diversion", "Notfall"].includes(item.category)).length;
     const latest = items[0]?.date ? formatDate(items[0].date) : "Keine Daten";
-    if (stats) stats.innerHTML = `<div class="stat-card"><span>Meldungen online</span><strong>${items.length}</strong><small>freigegebene Beiträge</small></div><div class="stat-card"><span>Special Movements</span><strong>${movementCount}</strong><small>im öffentlichen Newsroom</small></div><div class="stat-card"><span>Letztes Update</span><strong>${escapeHtml(latest)}</strong><small>nach Quellenlage</small></div>`;
+    if (stats?.id === "home-stats") stats.innerHTML = `<div><strong>${items.length}</strong><span>Meldungen online</span></div><div><strong>${movementCount}</strong><span>Special Movements</span></div><div><strong>${escapeHtml(latest)}</strong><span>Letztes Update</span></div>`;
+    else if (stats) stats.innerHTML = `<div class="stat-card"><span>Meldungen online</span><strong>${items.length}</strong><small>freigegebene Beiträge</small></div><div class="stat-card"><span>Special Movements</span><strong>${movementCount}</strong><small>im öffentlichen Newsroom</small></div><div class="stat-card"><span>Letztes Update</span><strong>${escapeHtml(latest)}</strong><small>nach Quellenlage</small></div>`;
     if (categories) {
       const counts = items.reduce((result, item) => { result[item.category] = (result[item.category] || 0) + 1; return result; }, {});
       categories.innerHTML = Object.entries(counts).map(([category, count]) => `<a href="news.html?category=${encodeURIComponent(category)}"><span>${escapeHtml(category)}</span><b>${count}</b></a>`).join("") || `<p class="empty-state">Noch keine freigegebenen Themen.</p>`;
