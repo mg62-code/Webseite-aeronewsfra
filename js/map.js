@@ -45,10 +45,6 @@
     layerControls.innerHTML = `<span>Layer</span><button data-layer="area" class="is-active">Bereich</button><button data-layer="points" class="is-active">Punkte</button><button data-layer="axes" class="is-active">Achsen</button><button data-layer="aircraft">Live-Fluege</button>`;
     container.parentElement.insertBefore(layerControls, container);
     layerControls.querySelectorAll("button").forEach(button => button.addEventListener("click", () => { const key = button.dataset.layer; state.layer[key] = !state.layer[key]; button.classList.toggle("is-active", state.layer[key]); render(); }));
-    layerControls.className = "aero-layer-controls";
-    layerControls.innerHTML = `<span>Layer</span><button data-layer="area" class="is-active">Bereich</button><button data-layer="points" class="is-active">Punkte</button><button data-layer="axes" class="is-active">Achsen</button><button data-layer="aircraft">Live-Fluege</button>`;
-    container.parentElement.insertBefore(layerControls, container);
-    layerControls.querySelectorAll("button").forEach(button => button.addEventListener("click", () => { const key = button.dataset.layer; state.layer[key] = !state.layer[key]; button.classList.toggle("is-active", state.layer[key]); render(); }));
     const zoom = factor => { state.scale = Math.min(4, Math.max(.65, state.scale * factor)); render(); };
     let pointerStart = null;
     svg.addEventListener("pointerdown", event => { pointerStart = { x: event.clientX, y: event.clientY, tx: state.tx, ty: state.ty }; state.moving = false; svg.setPointerCapture(event.pointerId); });
